@@ -1,7 +1,8 @@
 class RecipeCard extends HTMLElement {
   constructor() {
     // Part 1 Expose - TODO
-
+    super();
+    const shadowRoot = this.attachShadow({mode: 'open'});
     // You'll want to attach the shadow DOM here
   }
 
@@ -87,7 +88,66 @@ class RecipeCard extends HTMLElement {
 
     // Here's the root element that you'll want to attach all of your other elements to
     const card = document.createElement('article');
+    const recipeTitle = document.createElement('img');
+    recipeTitle.src = searchForKey(data, 'thumbnailUrl');// url or thumbnail
+    recipeTitle.alt = 'Recipe Title';
+    const title = document.createElement('p');
+    title.classList.add('title');
+    const titleLink = document.createElement('a');
+    titleLink.href = getUrl(data);
+    titleLink.innerText = searchForKey(data, 'headline');
+    const organization = document.createElement('p');
+    organization.classList.add('organization');
+    organization.innerText = searchForKey(data, 'name');
+    const ratingDiv = document.createElement('div');
+    ratingDiv.classList.add('rating');
+    if (searchForKey(data, 'ratingValue') == undefined) {
+      const noReviews = document.createElement('span');
+      noReviews.innerText = 'No Reviews';
+      ratingDiv.appendChild(noReviews);
+    } else {
+      const avgReviews = document.createElement('span');
+      avgReviews.innerText = searchForKey(data, 'ratingValue');
+      const reviewPic = document.createElement('img');
+      switch (Math.round(avgReviews.innerText)) {
+        case 0:
+          reviewPic.src = '/assets/images/icons/0-star.svg';
+          reviewPic.alt = '0 starts';
+          break;
+        case 1:
+          reviewPic.src = '/assets/images/icons/1-star.svg';
+          reviewPic.alt = '1 starts';
+          break;
+        case 2:
+          reviewPic.src = '/assets/images/icons/2-star.svg';
+          reviewPic.alt = '2 starts';
+          break;
+        case 3:
+          reviewPic.src = '/assets/images/icons/3-star.svg';
+          reviewPic.alt = '3 starts';
+          break;
+        case 4:
+          reviewPic.src = '/assets/images/icons/4-star.svg';
+          reviewPic.alt = '4 starts';
+          break;
+        case 5:
+          console.log((Math.round(avgReviews.innerText)));
+          reviewPic.src = '/assets/images/icons/5-star.svg';
+          reviewPic.alt = '5 starts';
+          break;
+      }
 
+      const totalReviews = document.createElement('span');
+      totalReviews.innerText = '(' + searchForKey(data, 'ratingCount') + ')';
+      ratingDiv.appendChild(avgReviews);
+      ratingDiv.appendChild(reviewPic);
+      ratingDiv.appendChild(totalReviews);
+    }
+    const totalTime = document.createElement('time');
+    totalTime.innerText = convertTime(searchForKey(data, 'totalTime'));
+    const ingredients = document.createElement('p');
+    ingredients.classList.add('ingredients');
+    //ingredients.innerText = createIngredientList(searchForKey(data, 'recipeIngredient'));
     // Some functions that will be helpful here:
     //    document.createElement()
     //    document.querySelector()
@@ -98,7 +158,16 @@ class RecipeCard extends HTMLElement {
 
     // Make sure to attach your root element and styles to the shadow DOM you
     // created in the constructor()
-
+    
+    card.appendChild(recipeTitle);
+    card.appendChild(title);
+    title.appendChild(titleLink);
+    card.appendChild(organization);
+    card.appendChild(ratingDiv);
+    card.appendChild(totalTime);
+    card.appendChild(ingredients);
+    this.shadowRoot.appendChild(card);
+    this.shadowRoot.appendChild(styleElem);
     // Part 1 Expose - TODO
   }
 }
@@ -150,7 +219,7 @@ function getUrl(data) {
  * Similar to getUrl(), this function extracts the organizations name from the
  * schema JSON object. It's not in a standard location so this function helps.
  * @param {Object} data Raw recipe JSON to find the org string of
- * @returns {String} If found, it retuns the name of the org as a string, otherwise null
+ * @returns {String} If found, it returns the name of the org as a string, otherwise null
  */
 function getOrganization(data) {
   if (data.publisher?.name) return data.publisher?.name;
