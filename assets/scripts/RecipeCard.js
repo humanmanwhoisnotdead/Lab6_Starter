@@ -111,28 +111,28 @@ class RecipeCard extends HTMLElement {
       const reviewPic = document.createElement('img');
       switch (Math.round(avgReviews.innerText)) {
         case 0:
-          reviewPic.src = '/assets/images/icons/0-star.svg';
+          reviewPic.src = 'assets/images/icons/0-star.svg';
           reviewPic.alt = '0 starts';
           break;
         case 1:
-          reviewPic.src = '/assets/images/icons/1-star.svg';
+          reviewPic.src = 'assets/images/icons/1-star.svg';
           reviewPic.alt = '1 starts';
           break;
         case 2:
-          reviewPic.src = '/assets/images/icons/2-star.svg';
+          reviewPic.src = 'assets/images/icons/2-star.svg';
           reviewPic.alt = '2 starts';
           break;
         case 3:
-          reviewPic.src = '/assets/images/icons/3-star.svg';
+          reviewPic.src = 'assets/images/icons/3-star.svg';
           reviewPic.alt = '3 starts';
           break;
         case 4:
-          reviewPic.src = '/assets/images/icons/4-star.svg';
+          reviewPic.src = 'assets/images/icons/4-star.svg';
           reviewPic.alt = '4 starts';
           break;
         case 5:
           console.log((Math.round(avgReviews.innerText)));
-          reviewPic.src = '/assets/images/icons/5-star.svg';
+          reviewPic.src = 'assets/images/icons/5-star.svg';
           reviewPic.alt = '5 starts';
           break;
       }
