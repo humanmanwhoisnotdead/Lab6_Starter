@@ -146,7 +146,7 @@ class RecipeCard extends HTMLElement {
     totalTime.innerText = convertTime(searchForKey(data, 'totalTime'));
     const ingredients = document.createElement('p');
     ingredients.classList.add('ingredients');
-    //ingredients.innerText = createIngredientList(searchForKey(data, 'recipeIngredient'));
+    ingredients.innerText = createIngredientList(searchForKey(data, 'recipeIngredient'));
     // Some functions that will be helpful here:
     //    document.createElement()
     //    document.querySelector()
