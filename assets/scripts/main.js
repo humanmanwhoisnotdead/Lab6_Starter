@@ -5,7 +5,10 @@
 const recipes = [
   'https://introweb.tech/assets/json/ghostCookies.json',
   'https://introweb.tech/assets/json/birthdayCake.json',
-  'https://introweb.tech/assets/json/chocolateChip.json'
+  'https://introweb.tech/assets/json/chocolateChip.json',
+  '/assets/recipes/recpies1.json',
+  '/assets/recipes/recpies2.json',
+  '/assets/recipes/recpies3.json'
 ];
 
 // Once all of the recipes that were specified above have been fetched, their
@@ -96,6 +99,27 @@ function bindShowMore() {
   // that were fetched. You should fetch every recipe in the beginning, whether you
   // display it or not, so you don't need to fetch them again. Simply access them
   // in the recipeData object where you stored them/
+  var fourthRecipe = document.createElement('recipe-card');
+  fourthRecipe.data = (recipeData[recipes[3]]);
+  var fifthRecipe = document.createElement('recipe-card');
+  fifthRecipe.data = (recipeData[recipes[4]]);
+  var sixthRecipe = document.createElement('recipe-card');
+  sixthRecipe.data = (recipeData[recipes[5]]);
 
   // Part 2 Explore - TODO
+  var button = document.querySelector('button');
+  button.addEventListener('click', alternateShow);
+  function alternateShow() {
+    if (button.innerText == "Show more") {
+      button.innerText = "Show less";
+      document.querySelector('main').appendChild(fourthRecipe);
+      document.querySelector('main').appendChild(fifthRecipe);
+      document.querySelector('main').appendChild(sixthRecipe);
+    } else {
+      button.innerText = "Show more";
+      document.querySelector('main').removeChild(fourthRecipe);
+      document.querySelector('main').removeChild(fifthRecipe);
+      document.querySelector('main').removeChild(sixthRecipe);
+    }
+  }
 }
